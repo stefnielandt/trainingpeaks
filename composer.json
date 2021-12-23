@@ -1,20 +1,17 @@
 {
-  "name": "iamstuartwilson/strava",
-  "description": "PHP implementation of the Strava V3 API",
+  "name": "stefnielandt/trainingpeaks",
+  "description": "PHP implementation of the TrainingPeaks API",
   "license": "MIT",
   "authors": [
     {
-      "name": "Stuart Wilson",
-      "email": "bonjour@iamstuartwilson.com"
+      "name": "Stef Nielandt",
+      "email": "stef.nielandt@dodo.be"
     }
   ],
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
     "php": ">=5.5"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "~4.8"
   },
   "autoload": {
     "psr-0" : {
