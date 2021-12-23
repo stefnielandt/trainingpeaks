@@ -59,7 +59,7 @@ class TrainingPeaksApi
         return json_decode($response);
     }
 
-    protected function request($url, $parameters = array(), $request = false)
+    protected function request($url, $parameters = array(), $request = false, $contentType = false)
     {
         $this->lastRequest = $url;
         $this->lastRequestData = $parameters;
@@ -82,8 +82,14 @@ class TrainingPeaksApi
             if (! empty($request)) {
                 $curlOptions[ CURLOPT_CUSTOMREQUEST ] = $request;
                 $parameters = http_build_query($parameters);
-            } else {
+            }
+            else {
                 $curlOptions[ CURLOPT_POST ] = true;
+            }
+            if(! empty($contentType))
+            {
+                $curlOptions[ CURLOPT_HTTPHEADER ] = ['Content-Type: ' . $contentType];
+                $parameters = http_build_query($parameters);
             }
 
             $curlOptions[ CURLOPT_POSTFIELDS ] = $parameters;
@@ -135,7 +141,8 @@ class TrainingPeaksApi
 
         return $this->request(
             $this->authUrl . 'token',
-            $parameters
+            $parameters,
+            'application/x-www-form-urlencoded'
         );
     }
 
