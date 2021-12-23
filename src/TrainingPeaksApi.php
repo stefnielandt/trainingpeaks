@@ -59,7 +59,7 @@ class TrainingPeaksApi
         return json_decode($response);
     }
 
-    protected function request($url, $parameters = array(), $request = false, $contentType = false)
+    protected function request($url, $parameters = array(), $request = false, $contentType = false, $auth=false)
     {
         $this->lastRequest = $url;
         $this->lastRequestData = $parameters;
@@ -87,6 +87,11 @@ class TrainingPeaksApi
                 $curlOptions[ CURLOPT_POST ] = true;
             }
             if(! empty($contentType))
+            {
+                $curlOptions[ CURLOPT_HTTPHEADER ] = ['Content-Type: ' . $contentType];
+                $parameters = http_build_query($parameters);
+            }
+            if(! empty($auth))
             {
                 $curlOptions[ CURLOPT_HTTPHEADER ] = ['Content-Type: ' . $contentType];
                 $parameters = http_build_query($parameters);
@@ -194,8 +199,7 @@ class TrainingPeaksApi
     protected function generateParameters($parameters)
     {
         return array_merge(
-            $parameters,
-            array( 'access_token' => $this->accessToken )
+            $parameters
         );
     }
 
@@ -234,7 +238,7 @@ class TrainingPeaksApi
         return $this->apiUrl . $request;
     }
 
-    public function get($request, $parameters = array())
+    public function get($request, $parameters = array(),$contentType=false,$auth=false)
     {
         $parameters = $this->generateParameters($parameters);
         $requestUrl = $this->parseGet($this->getAbsoluteUrl($request), $parameters);
@@ -242,29 +246,36 @@ class TrainingPeaksApi
         return $this->request($requestUrl);
     }
 
-    public function put($request, $parameters = array())
+    public function put($request, $parameters = array(),$contentType=false,$auth=false)
     {
         return $this->request(
             $this->getAbsoluteUrl($request),
             $this->generateParameters($parameters),
-            'PUT'
+            'PUT',
+            $contentType,
+            $auth
         );
     }
 
-    public function post($request, $parameters = array())
-    {
-        return $this->request(
-            $this->getAbsoluteUrl($request),
-            $this->generateParameters($parameters)
-        );
-    }
-
-    public function delete($request, $parameters = array())
+    public function post($request, $parameters = array(),$contentType=false,$auth=false)
     {
         return $this->request(
             $this->getAbsoluteUrl($request),
             $this->generateParameters($parameters),
-            'DELETE'
+            false,
+            $contentType,
+            $auth
+        );
+    }
+
+    public function delete($request, $parameters = array(),$contentType=false,$auth=false)
+    {
+        return $this->request(
+            $this->getAbsoluteUrl($request),
+            $this->generateParameters($parameters),
+            'DELETE',
+            $contentType,
+            $auth
         );
     }
 
