@@ -123,13 +123,14 @@ class TrainingPeaksApi
         );
     }
 
-    public function tokenExchange($code)
+    public function tokenExchange($code, $redirect_uri)
     {
         $parameters = array(
             'client_id'     => $this->clientId,
             'client_secret' => $this->clientSecret,
             'code'          => $code,
-            'grant_type'    => 'authorization_code'
+            'grant_type'    => 'authorization_code',
+            'redirect_uri'  => $redirect_uri
         );
 
         return $this->request(
