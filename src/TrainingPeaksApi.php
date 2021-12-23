@@ -105,7 +105,7 @@ class TrainingPeaksApi
         return $this->parseResponse($response);
     }
 
-    public function authenticationUrl($redirect, $approvalPrompt = 'auto', $scope = null, $state = null)
+    public function authenticationUrl($redirect, $scope = null)
     {
         $parameters = array(
             'client_id'       => $this->clientId,
