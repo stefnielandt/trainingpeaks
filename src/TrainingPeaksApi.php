@@ -142,6 +142,7 @@ class TrainingPeaksApi
         return $this->request(
             $this->authUrl . 'token',
             $parameters,
+            false,
             'application/x-www-form-urlencoded'
         );
     }
