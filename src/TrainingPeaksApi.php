@@ -93,7 +93,7 @@ class TrainingPeaksApi
             }
             if(! empty($auth))
             {
-                $curlOptions[ CURLOPT_HTTPHEADER ] = ['Content-Type: ' . $contentType];
+                $curlOptions[ CURLOPT_HTTPHEADER ] = ['Authorization: Bearer ' . $this->accessToken];
                 $parameters = http_build_query($parameters);
             }
 
