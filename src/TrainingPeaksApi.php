@@ -19,16 +19,18 @@ class TrainingPeaksApi
     protected $authUrl;
     protected $clientId;
     protected $clientSecret;
+    protected $userAgent;
 
     private $accessToken;
     private $refreshToken;
     private $expiresAt;
 
-    public function __construct($clientId = 1, $clientSecret = '', $production = false)
+    public function __construct($clientId = 1, $clientSecret = '', $userAgent = '', $production = false)
     {
         $base_url = $production ? self::PRODUCTION_URL : self::SANDBOX_URL;
         $this->clientId     = $clientId;
         $this->clientSecret = $clientSecret;
+        $this->userAgent = $userAgent;
         $this->apiUrl       = 'https://api.' . $base_url . '/v1/';
         $this->authUrl      = 'https://oauth.' . $base_url . '/oauth/';
     }
@@ -76,6 +78,7 @@ class TrainingPeaksApi
             CURLOPT_REFERER        => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADERFUNCTION => array($this, 'parseHeader'),
+            CURLOPT_USERAGENT => $this->userAgent,
         );
 
         if (! empty($parameters) || ! empty($request)) {
